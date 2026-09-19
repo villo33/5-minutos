@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <meta name="theme-color" content="#39ff14">
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="5 Minutos"
+  >
+
+  <link rel="manifest" href="manifest.json">
+
+  <link
+    rel="apple-touch-icon"
+    href="icons/icon-192.png"
+  >
+
+  <title>5 Minutos</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="app">
+
+    <!-- ================= INICIO ================= -->
+    <section id="homePage" class="page active">
+
+      <header class="main-header">
+        <div>
+          <span class="mini-title">ENTRETENIMIENTO</span>
+          <h1>5 <span>Minutos</span></h1>
+          <p>Tu momento. Tu reto.</p>
+        </div>
+
+        <div class="header-score">
+          <span>⭐</span>
+          <strong id="homePoints">0</strong>
+        </div>
+      </header>
+
+      <div class="welcome-card">
+        <div class="welcome-icon">⚡</div>
+
+        <div>
+          <h2>¿Tienes 5 minutos?</h2>
+          <p>Elige un juego y empieza.</p>
+        </div>
+      </div>
+
+      <button class="surprise-btn" onclick="surpriseMe()">
+        <span>🎲</span>
+
+        <div>
+          <strong>Sorpréndeme</strong>
+          <small>Elige un reto al azar</small>
+        </div>
+
+        <b>›</b>
+      </button>
+
+      <h3 class="section-title">JUEGOS</h3>
+
+      <div class="games-grid">
+
+        <button class="game-card" onclick="startQuiz('quick')">
+          <div class="game-icon green">🧠</div>
+          <strong>Mente rápida</strong>
+          <small>Preguntas rápidas</small>
+        </button>
+
+        <button class="game-card" onclick="startQuiz('quiz')">
+          <div class="game-icon purple">❓</div>
+          <strong>Quiz express</strong>
+          <small>Pon a prueba tu mente</small>
+        </button>
+
+        <button class="game-card" onclick="startQuiz('prefer')">
+          <div class="game-icon orange">⚖️</div>
+          <strong>¿Qué prefieres?</strong>
+          <small>Decide rápido</small>
+        </button>
+
+        <button class="game-card" onclick="startQuiz('guess')">
+          <div class="game-icon blue">🔎</div>
+          <strong>Adivina</strong>
+          <small>Descubre la respuesta</small>
+        </button>
+
+        <button class="game-card word-card" onclick="startWordSearch()">
+          <div class="game-icon neon">🔤</div>
+          <strong>Sopa de letras</strong>
+          <small>Desliza con tu dedo</small>
+        </button>
+
+        <button class="game-card" onclick="dailyChallenge()">
+          <div class="game-icon yellow">🔥</div>
+          <strong>Reto diario</strong>
+          <small>Un reto cada día</small>
+        </button>
+
+      </div>
+
+      <div class="stats-card">
+
+        <div class="stats-header">
+
+          <div>
+            <span class="mini-title">TU PROGRESO</span>
+            <h3>Estadísticas</h3>
+          </div>
+
+          <span class="trophy">🏆</span>
+
+        </div>
+
+        <div class="stats-grid">
+
+          <div>
+            <strong id="statGames">0</strong>
+            <span>Partidas</span>
+          </div>
+
+          <div>
+            <strong id="statPoints">0</strong>
+            <span>Puntos</span>
+          </div>
+
+          <div>
+            <strong id="statBest">0</strong>
+            <span>Mejor racha</span>
+          </div>
+
+          <div>
+            <strong id="statWords">0</strong>
+            <span>Palabras</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="achievement-card">
+
+        <span>🏅</span>
+
+        <div>
+          <strong id="achievementTitle">Primer paso</strong>
+          <small id="achievementText">
+            Juega tu primera partida
+          </small>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= QUIZ ================= -->
+    <section id="quizPage" class="page">
+
+      <header class="game-header">
+
+        <button class="back-btn" onclick="goHome()">
+          ‹
+        </button>
+
+        <div>
+          <span id="quizCategory">MENTE RÁPIDA</span>
+          <h2 id="quizTitle">Pregunta</h2>
+        </div>
+
+        <div class="question-counter">
+          <span id="questionNumber">1</span>/10
+        </div>
+
+      </header>
+
+      <div class="quiz-score-row">
+
+        <div>
+          <span>PUNTOS</span>
+          <strong id="quizPoints">0</strong>
+        </div>
+
+        <div>
+          <span>🔥 RACHA</span>
+          <strong id="quizStreak">0</strong>
+        </div>
+
+        <div>
+          <span>⏱</span>
+          <strong id="quizTimer">20</strong>
+        </div>
+
+      </div>
+
+      <div class="progress-bar">
+        <div id="quizProgress"></div>
+      </div>
+
+      <div class="question-card">
+
+        <span class="question-label">
+          PREGUNTA
+        </span>
+
+        <h2 id="questionText">
+          Cargando...
+        </h2>
+
+      </div>
+
+      <div id="answers" class="answers"></div>
+
+      <button
+        id="nextQuestionBtn"
+        class="primary-btn hidden"
+        onclick="nextQuestion()"
+      >
+        Siguiente
+      </button>
+
+    </section>
+
+
+    <!-- ================= SOPA DE LETRAS ================= -->
+    <section id="wordPage" class="page">
+
+      <header class="game-header word-header">
+
+        <button class="back-btn" onclick="goHome()">
+          ‹
+        </button>
+
+        <div>
+          <span>SOPA DE LETRAS</span>
+          <h2 id="wordTheme">MEZCLA</h2>
+        </div>
+
+        <button
+          class="refresh-btn"
+          onclick="newWordGame()"
+        >
+          ↻
+        </button>
+
+      </header>
+
+
+      <div class="word-stats">
+
+        <div>
+          <span>⏱</span>
+          <strong id="wordTimer">120</strong>
+        </div>
+
+        <div>
+          <span>⭐</span>
+          <strong id="wordPoints">0</strong>
+        </div>
+
+        <div>
+          <span>🔥</span>
+          <strong id="wordStreak">0</strong>
+        </div>
+
+        <div>
+          <span>✓</span>
+          <strong>
+            <span id="foundCount">0</span>/8
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="word-help">
+
+        <strong>Desliza tu dedo</strong>
+
+        <span>
+          Busca las 8 palabras ocultas
+        </span>
+
+      </div>
+
+
+      <div
+        id="wordBoard"
+        class="word-board"
+      ></div>
+
+
+      <div class="words-title">
+
+        <span>PALABRAS</span>
+
+        <small id="wordDifficulty">
+          NUEVA
+        </small>
+
+      </div>
+
+
+      <div
+        id="wordList"
+        class="word-list"
+      ></div>
+
+
+      <button
+        class="primary-btn finish-btn"
+        onclick="finishWordSearch(true)"
+      >
+        Terminar partida
+      </button>
+
+    </section>
+
+  </div>
+
+
+  <!-- ================= MODAL ================= -->
+
+  <div id="resultModal" class="modal hidden">
+
+    <div class="modal-box">
+
+      <div
+        id="resultEmoji"
+        class="result-emoji"
+      >
+        🎉
+      </div>
+
+      <span id="resultSmall">
+        RESULTADO
+      </span>
+
+      <h2 id="resultTitle">
+        ¡Excelente!
+      </h2>
+
+      <p id="resultText">
+        Has completado el reto.
+      </p>
+
+      <div class="result-score">
+
+        <span>PUNTOS</span>
+
+        <strong id="resultPoints">
+          0
+        </strong>
+
+      </div>
+
+      <button
+        id="resultPrimary"
+        class="primary-btn"
+        onclick="resultPrimaryAction()"
+      >
+        Continuar
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="goHome()"
+      >
+        Inicio
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
